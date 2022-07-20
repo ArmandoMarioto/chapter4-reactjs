@@ -36,7 +36,7 @@ export function Header(){
                 placeholder='Buscar na plataforma'
                 _placeholder={{ color: 'gray.400' }}
                 />
-                <Icon as={RiSearchLine} fontSize='20'/>
+                <Icon as={RiSearchLine} fontSize='20' color='pink.400'/>
             </Flex>
 
             <Flex
