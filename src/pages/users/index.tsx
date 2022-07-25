@@ -22,12 +22,19 @@ import { Header } from "../../components/Header";
 import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/SideBar";
 import { useQuery } from "@tanstack/react-query";
+import { api } from "../../services/api";
+
+type userResponse = {
+  id: string;
+  name: string;
+  email: string;
+  created_at: string;
+}
 
 export default function UserList() {
   const { data, isLoading, error, isFetching } = useQuery(["users"], async () => {
-    const response = await fetch("/api/users");
-    const data = await response.json();
-    const users = data.users.map((user) => {
+    const { data } = await api.get("/users");
+    const users = data.users.map((user: userResponse) => {
       return {
         id: user.id,
         name: user.name,
