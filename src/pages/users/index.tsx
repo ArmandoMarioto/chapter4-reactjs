@@ -24,7 +24,7 @@ import { Sidebar } from "../../components/SideBar";
 import { useQuery } from "@tanstack/react-query";
 
 export default function UserList() {
-  const { data, isLoading, error } = useQuery(["users"], async () => {
+  const { data, isLoading, error, isFetching } = useQuery(["users"], async () => {
     const response = await fetch("/api/users");
     const data = await response.json();
     const users = data.users.map((user) => {
@@ -60,6 +60,7 @@ export default function UserList() {
           <Flex mb="8" justify="space-between" align="center">
             <Heading size="lg" fontWeight="normal">
               Usuários
+              {!isLoading && isFetching && <Spinner size="sm" color='gray.500' ml='4' />}
             </Heading>
 
             <Link href="/users/create" passHref>
