@@ -16,41 +16,15 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { useEffect } from "react";
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
 import { Header } from "../../components/Header";
 import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/SideBar";
-import { useQuery } from "@tanstack/react-query";
-import { api } from "../../services/api";
+import { useUsers } from "../../services/hooks/useUsers";
 
-type userResponse = {
-  id: string;
-  name: string;
-  email: string;
-  created_at: string;
-}
 
 export default function UserList() {
-  const { data, isLoading, error, isFetching } = useQuery(["users"], async () => {
-    const { data } = await api.get("/users");
-    const users = data.users.map((user: userResponse) => {
-      return {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        createdAt: new Date(user.created_at).toLocaleDateString('pt-BR',{
-          day: '2-digit',
-          month: 'long',
-          year: 'numeric',
-        })
-      }
-    })
-
-    return users;
-  },{
-    staleTime: 1000 * 60 * 60,
-  });
+  const { data, isLoading, error, isFetching } = useUsers();
 
   const isWideVersion = useBreakpointValue({
     base: false,
@@ -116,7 +90,7 @@ export default function UserList() {
                           {user.email}
                           </Text>
                         </Td>
-                        {isWideVersion && <Td>{user.createdAt}</Td>}
+                        {isWideVersion && <Td>{user.created_at}</Td>}
                         {isWideVersion && (
                           <Td>
                             <Button
