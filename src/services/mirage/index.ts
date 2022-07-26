@@ -47,6 +47,7 @@ export function makeServer() {
         )
       });
       this.post("/users");
+      this.get("/users/:id");
 
       this.namespace = "";
       this.passthrough();
